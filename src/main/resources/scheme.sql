@@ -41,6 +41,28 @@ DROP TABLE IF EXISTS student;
 CREATE TABLE student (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_person INTEGER NOT NULL,
-    typeStudent TEXT NOT NULL,
-    CONSTRAINT ch_pk_student FOREIGN KEY id_person REFERENCES person(id)
+    student_type TEXT NOT NULL,
+    FOREIGN KEY id_person REFERENCES person(id)
 );
+
+CREATE TABLE subjects (
+    id_subject INTEGER PRIMARY KEY AUTOINCREMENT,
+    subject_name TEXT NOT NULL
+);
+
+CREATE TABLE careers (
+    id_careers INTEGER PRIMARY KEY AUTOINCREMENT,
+    career_name TEXT NOT NULL,
+    career_duration INTEGER NOT NULL CHECK(career_duration > 0)
+);
+
+CREATE TABLE evaluations (
+    id_evaluations INTEGER PRIMARY KEY AUTOINCREMENT,
+    evaluation_date DATE NOT NULL,
+    evaluation_name TEXT NOT NULL
+);
+
+CREATE TABLE conditions (
+    id_condition INTEGER PRIMARY KEY AUTOINCREMENT,
+    condition_type TEXT CHECK(condition_type IN('aprobado', 'desaprobado'))
+)
