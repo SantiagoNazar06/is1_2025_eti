@@ -14,7 +14,21 @@ public class Person extends Model {
         set("dni", dni);
     }
 
-    public String
+    public String getFirstName(){
+        return getString("firstName");
+    }
+
+    public void setFirstName(String name){
+        set("firstName", name);
+    }
+
+    public String getLastName(){
+        return getString("lastName");
+    }
+
+    public void setLastName(String lastname){
+        set("firstName", lastname);
+    }
 
     public String getPhone(){
         return getString("phone");
