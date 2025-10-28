@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS persons;
 
 -- Crea la tabla 'persons' con los campos originales, adaptados para SQLite
 CREATE TABLE persons (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     dni INTEGER NOT NULL UNIQUE -- Clave primaria autoincremental para SQLite
     firstName TEXT NOT NULL,          -- Nombre de usuario (TEXT es el tipo de cadena recomendado para SQLite), con restricción UNIQUE
     lastName TEXT NOT NULL,
@@ -27,7 +27,8 @@ DROP TABLE IF EXISTS teacher;
 
 -- Crea la tabla 'teacher' con los campos originales, adaptados para SQLite
 CREATE TABLE teacher (
-    id_persona INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_persona INTEGER NOT NULL,
     nroLegajo INTEGER NOT NULL UNIQUE,
     FOREIGN KEY id_persona REFERENCES person(id)
 );
@@ -38,7 +39,8 @@ DROP TABLE IF EXISTS student;
 
 -- Crea la tabla 'student' con los campos originales, adaptados para SQLite
 CREATE TABLE student (
-    id INTEGER PRIMARY KEY,
-    typeStudent ,
-    CONSTRAINT ch_pk_student FOREIGN KEY id REFERENCES person(id)
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_person INTEGER NOT NULL,
+    typeStudent TEXT NOT NULL,
+    CONSTRAINT ch_pk_student FOREIGN KEY id_person REFERENCES person(id)
 );
