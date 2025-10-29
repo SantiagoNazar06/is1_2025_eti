@@ -3,7 +3,7 @@ package com.is1.proyecto.models;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-@Table("student")
+@Table("students")
 public class Student extends Model{
     
     public Person getPerson(){
@@ -11,7 +11,7 @@ public class Student extends Model{
     }
 
     public void setPerson(Person p){
-        set("id_persona", p.getId());
+        set("id_person", p.getId());
     }
 
     public String getType(){

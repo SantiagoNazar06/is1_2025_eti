@@ -20,6 +20,7 @@ import java.util.Map; // Interfaz Map, utilizada para Map.of() o HashMap.
 import com.is1.proyecto.config.DBConfigSingleton; // Clase Singleton para la configuración de la base de datos.
 import com.is1.proyecto.models.Person;
 import com.is1.proyecto.models.Teacher;
+import com.is1.proyecto.models.Student;
 import com.is1.proyecto.models.User; // Modelo de ActiveJDBC que representa la tabla 'users'.
 
 
@@ -170,6 +171,19 @@ public class App {
             return new ModelAndView(model, "teacher_form.mustache");
         }, new MustacheTemplateEngine());
 
+        get("/register_student", (req, res) ->{
+            Map<String, Object> model = new HashMap<>();
+            String errorMessage = req.queryParams("error");
+            if (errorMessage != null && !errorMessage.isEmpty()) {
+                model.put("errorMessage", errorMessage);
+            }
+            String successMessage = req.queryParams("message");
+            if (successMessage != null && !successMessage.isEmpty()) {
+                model.put("successMessage", successMessage);
+            }
+            return new ModelAndView(model, "student_form.mustache");
+        }, new MustacheTemplateEngine());
+
         // --- Rutas POST para manejar envíos de formularios y APIs ---
 
         // POST: Maneja el envío del formulario de creación de nueva cuenta.
@@ -249,6 +263,48 @@ public class App {
                 e.printStackTrace(); // Imprime el stack trace para depuración.
                 res.status(500); // Código de estado HTTP 500 (Internal Server Error).
                 res.redirect("/register_teacher?error=Error interno al crear la cuenta. Intente de nuevo.");
+                return ""; // Retorna una cadena vacía.
+            }
+        });
+
+        //crea un nuevo student en la base de datos
+        post("/register_student", (req, res) -> {
+            // Obtenemos los datos del formulario de registro de profesor
+            String dni = req.queryParams("dni");
+            String type = req.queryParams("student_type");
+            String firstName = req.queryParams("firstName");
+            String lastName = req.queryParams("lastName");
+            String phone = req.queryParams("phone");
+            String email = req.queryParams("email");
+
+            try {
+                // Creamos una nueva instancia de una persona
+                Person ps = new Person();
+                ps.setDni(dni);
+                ps.setFirstName(firstName);
+                ps.setLastName(lastName);
+                ps.setPhone(phone);
+                ps.setEmail(email);
+                ps.saveIt();// Guardamos la persona en la tabla personas
+                // Creamos una instancia de Estudiante
+                Student st = new Student();
+                // Le damos la informacion correspondiente de esa persona que es profesor
+                st.setPerson(ps);
+                st.setType(type);
+                st.saveIt(); // Guardamos a la persona como estudiante
+
+                res.status(201);
+                res.redirect("/register_student?message=Cuenta creada exitosamente para " + firstName + "!");
+
+                return "";
+
+            } catch (Exception e) {
+                // Si ocurre cualquier error durante la operación de DB (ej. nombre de usuario duplicado),
+                // se captura aquí y se redirige con un mensaje de error.
+                System.err.println("Error al registrar el estudiante: " + e.getMessage());
+                e.printStackTrace(); // Imprime el stack trace para depuración.
+                res.status(500); // Código de estado HTTP 500 (Internal Server Error).
+                res.redirect("/register_student?error=Error interno al crear la cuenta. Intente de nuevo.");
                 return ""; // Retorna una cadena vacía.
             }
         });
