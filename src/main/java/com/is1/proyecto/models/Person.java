@@ -6,11 +6,11 @@ import org.javalite.activejdbc.annotations.Table;
 @Table("persons")
 public class Person extends Model {
 
-    public Integer getDni(){
-        return getInteger("dni");
+    public String getDni(){
+        return getString("dni");
     }
 
-    public void setDni(Integer dni){
+    public void setDni(String dni){
         set("dni", dni);
     }
 
@@ -27,7 +27,7 @@ public class Person extends Model {
     }
 
     public void setLastName(String lastname){
-        set("firstName", lastname);
+        set("lastName", lastname);
     }
 
     public String getPhone(){

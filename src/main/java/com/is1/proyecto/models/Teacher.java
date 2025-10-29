@@ -3,7 +3,7 @@ package com.is1.proyecto.models;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-@Table("teacher")
+@Table("teachers")
 public class Teacher extends Model{
 
     public Person getPerson(){
@@ -14,11 +14,11 @@ public class Teacher extends Model{
         set("id_persona", p.getId());
     }
 
-    public Integer getNroLegajo(){
-        return getInteger("nroLegajo");
+    public String getNroLegajo(){
+        return getString("nroLegajo");
     }
 
-    public void setNroLegajo(Integer nro){
+    public void setNroLegajo(String nro){
         set("nroLegajo", nro);
     }
 
