@@ -13,8 +13,8 @@ DROP TABLE IF EXISTS persons;
 
 -- Crea la tabla 'persons' con los campos originales, adaptados para SQLite
 CREATE TABLE persons (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    dni INTEGER NOT NULL UNIQUE -- Clave primaria autoincremental para SQLite
+    id INTEGER PRIMARY KEY AUTOINCREMENT, -- Clave primaria autoincremental para SQLite
+    dni TEXT NOT NULL UNIQUE,
     firstName TEXT NOT NULL,          -- Nombre de usuario (TEXT es el tipo de cadena recomendado para SQLite), con restricción UNIQUE
     lastName TEXT NOT NULL,
     phone TEXT NOT NULL,
@@ -22,27 +22,27 @@ CREATE TABLE persons (
 );
 
 
--- Elimina la tabla 'teacher' si ya existe para asegurar un inicio limpio
-DROP TABLE IF EXISTS teacher;
+-- Elimina la tabla 'teachers' si ya existe para asegurar un inicio limpio
+DROP TABLE IF EXISTS teachers;
 
--- Crea la tabla 'teacher' con los campos originales, adaptados para SQLite
-CREATE TABLE teacher (
+-- Crea la tabla 'teachers' con los campos originales, adaptados para SQLite
+CREATE TABLE teachers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_persona INTEGER NOT NULL,
-    nroLegajo INTEGER NOT NULL UNIQUE,
-    FOREIGN KEY id_persona REFERENCES person(id)
+    nroLegajo VARCHAR(30) NOT NULL UNIQUE,
+    FOREIGN KEY (id_persona) REFERENCES persons(id)
 );
 
 
--- Elimina la tabla 'student' si ya existe para asegurar un inicio limpio
-DROP TABLE IF EXISTS student;
+-- Elimina la tabla 'students' si ya existe para asegurar un inicio limpio
+DROP TABLE IF EXISTS students;
 
--- Crea la tabla 'student' con los campos originales, adaptados para SQLite
-CREATE TABLE student (
+-- Crea la tabla 'students' con los campos originales, adaptados para SQLite
+CREATE TABLE students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_person INTEGER NOT NULL,
     student_type TEXT NOT NULL,
-    FOREIGN KEY id_person REFERENCES person(id)
+    FOREIGN KEY (id_person) REFERENCES persons(id)
 );
 
 CREATE TABLE subjects (
