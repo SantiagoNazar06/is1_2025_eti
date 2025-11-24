@@ -150,7 +150,7 @@ public class App {
         // GET: Muestra el formulario de inicio de sesión (login).
         // Nota: Esta ruta debería ser capaz de leer también mensajes de error/éxito de
         // los query params
-        // si se la usa como destino de redirecciones. (Tu código de /user/create ya lo
+        // si se la usa como destino de redirecciones. (El código de /user/create ya lo
         // hace, aplicar similar).
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
