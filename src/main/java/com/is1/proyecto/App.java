@@ -312,14 +312,31 @@ public class App {
             String email = req.queryParams("email");
 
             try {
+                Person ps = Person.findFirst("dni = ?", dni);
                 // Creamos una nueva instancia de una persona
-                Person ps = new Person();
-                ps.setDni(dni);
-                ps.setFirstName(firstName);
-                ps.setLastName(lastName);
-                ps.setPhone(phone);
-                ps.setEmail(email);
-                ps.saveIt();// Guardamos la persona en la tabla personas
+                if(ps == null){
+                    ps = new Person();
+                    ps.setDni(dni);
+                    ps.setFirstName(firstName);
+                    ps.setLastName(lastName);
+                    ps.setPhone(phone);
+                    ps.setEmail(email);
+                    ps.saveIt();// Guardamos la persona en la tabla personas
+                }else{
+                    ps.setFirstName(firstName);
+                    ps.setLastName(lastName);
+                    ps.setPhone(phone);
+                    ps.setEmail(email);
+                    ps.saveIt();// Guardamos la persona en la tabla personas
+                }
+
+                Student existStudent = Student.findFirst("id_person = ?", ps.getId());
+
+                if(existStudent != null){
+                    res.redirect("/register_student?error=Ya existe un estudiante con el DNI " + dni);
+                    return "";
+                }
+
                 // Creamos una instancia de Estudiante
                 Student st = new Student();
                 // Le damos la informacion correspondiente de esa persona que es profesor
